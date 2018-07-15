@@ -36,7 +36,7 @@ public class Topic_01_CheckEnvironment {
 
   @AfterClass
   public void afterClass() {
-	  driver.close();
+	  driver.quit();
   }
 
 }
