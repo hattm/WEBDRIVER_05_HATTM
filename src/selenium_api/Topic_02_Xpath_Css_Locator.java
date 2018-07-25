@@ -44,7 +44,7 @@ public class Topic_02_Xpath_Css_Locator {
 
 		driver.navigate().back();
 		// Về lại page login thành công
-		Assert.assertTrue(driver.findElement(By.xpath("//a[@title='Create an Account']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//form[@id='login-form']")).isDisplayed());
 
 		String loginUrl = driver.getCurrentUrl();
 		Assert.assertEquals(loginUrl, "http://live.guru99.com/index.php/customer/account/login/");
@@ -71,7 +71,7 @@ public class Topic_02_Xpath_Css_Locator {
 	 * thống navigate về Home page sau khi logout thành công
 	 */
 
-	@Test
+	@Test(enabled = false)
 	public void TC_05_Create_An_Account() {
 		driver.get("http://live.guru99.com");
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -87,10 +87,14 @@ public class Topic_02_Xpath_Css_Locator {
 		driver.findElement(By.xpath("//input[@id='confirmation']")).sendKeys("23456@");
 
 		driver.findElement(By.xpath("//button[@title='Register']")).click();
+		driver.findElement(By.xpath("//span[contains(.,'Thank you for registering with Main Website Store')]"));
+
+		driver.findElement(By.xpath("//a[@class='skip-link skip-account skip-active']")).click();
+		driver.findElement(By.xpath("//a[@title='Log Out']")).click();
 
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void TC_02_Login_Empty() {
 		driver.get("http://live.guru99.com");
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -106,7 +110,7 @@ public class Topic_02_Xpath_Css_Locator {
 
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void TC_03_Login_With_Email_Invalid() {
 		driver.get("http://live.guru99.com");
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -117,7 +121,7 @@ public class Topic_02_Xpath_Css_Locator {
 
 	}
 
-	@Test
+	@Test(enabled = false)
 	public void TC_04_Login_With_Password_Incorrect() {
 		driver.get("http://live.guru99.com");
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
