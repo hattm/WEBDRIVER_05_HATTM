@@ -59,6 +59,37 @@ public class Topic_02_Xpath_Css_Locator {
 
 	}
 
+	/*
+	 * Test Script 05: Create an account Step 01 - Truy cập vào trang:
+	 * http://live.guru99.com/ Step 02 - Click vào link "My Account" để tới trang
+	 * đăng nhập Step 03 - Click CREATE AN ACCOUNT button để tới trang đăng kí tài
+	 * khoản Step 04 - Nhập thông tin hợp lệ vào tất cả các field: First Name/ Last
+	 * Name/ Email Address/ Password/ Confirm Password (Lưu ý: Tạo random cho dữ
+	 * liệu tại field Email Address) Step 05 - Click REGISTER button Step 05 -
+	 * Verify message xuất hiện khi đăng kí thành công: Thank you for registering
+	 * with Main Website Store. Step 06 - Logout khỏi hệ thống Step 07 - Kiểm tra hệ
+	 * thống navigate về Home page sau khi logout thành công
+	 */
+
+	@Test
+	public void TC_05_Create_An_Account() {
+		driver.get("http://live.guru99.com");
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+		driver.findElement(By.xpath("//div[@class='footer']//a[text()='My Account']")).click();
+		driver.findElement(By.xpath("//a[@title='Create an Account']")).click();
+
+		driver.findElement(By.xpath("//input[@id='firstname']")).sendKeys("Tran");
+		driver.findElement(By.xpath("//input[@id='middlename']")).sendKeys("Thi Mong");
+		driver.findElement(By.xpath("//input[@id='lastname']")).sendKeys("Ha");
+		driver.findElement(By.xpath("//input[@id='email_address']")).sendKeys("mongha2403@gmail.com");
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys("123456@");
+		driver.findElement(By.xpath("//input[@id='confirmation']")).sendKeys("23456@");
+
+		driver.findElement(By.xpath("//button[@title='Register']")).click();
+
+	}
+
 	@Test
 	public void TC_02_Login_Empty() {
 		driver.get("http://live.guru99.com");
