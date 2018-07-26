@@ -44,10 +44,9 @@ public class Topic_03_WebElement_Browser {
 
 	}
 
-	@Test
 	public void TC_02_IsEnable() throws Exception {
 		WebElement emailTextbox = driver.findElement(By.xpath("//input[@id='mail']"));
-		WebElement ageRadioButton = driver.findElement(By.xpath("//input[@id='under_18']"));
+		WebElement ageURadioButton = driver.findElement(By.xpath("//input[@id='under_18']"));
 		WebElement passwordText = driver.findElement(By.xpath("//input[@id='password']"));
 		WebElement educationTextArea = driver.findElement(By.xpath("//textarea[@id='edu']"));
 		WebElement job1selectextbox = driver.findElement(By.xpath("//select[@id='job1']"));
@@ -62,7 +61,7 @@ public class Topic_03_WebElement_Browser {
 		WebElement buttonDisableddButton = driver.findElement(By.xpath("//button[@id='button-disabled']"));
 
 		isControlEnabled(emailTextbox);
-		isControlEnabled(ageRadioButton);
+		isControlEnabled(ageURadioButton);
 		isControlEnabled(passwordText);
 		isControlEnabled(educationTextArea);
 		isControlEnabled(job1selectextbox);
@@ -86,6 +85,16 @@ public class Topic_03_WebElement_Browser {
 			System.out.println("Element is disabled");
 		}
 
+	}
+
+	@Test
+	public void TC_03_IsEnable() throws Exception {
+
+		WebElement ageURadioButton = driver.findElement(By.xpath("//input[@id='under_18']"));
+		ageURadioButton.click();
+		WebElement developmentradioButton = driver.findElement(By.xpath("//input[@id='development']"));
+		developmentradioButton.click();
+		Thread.sleep(5000);
 	}
 
 	@AfterClass
