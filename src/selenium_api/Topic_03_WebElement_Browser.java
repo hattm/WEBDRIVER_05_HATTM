@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -88,13 +89,36 @@ public class Topic_03_WebElement_Browser {
 	}
 
 	@Test
-	public void TC_03_IsEnable() throws Exception {
+	public void TC_031_Over18RadioIsSelected() throws Exception {
+		String element = "//input[@id='under_18']";
+		driver.findElement(By.xpath(element)).click();
+		Thread.sleep(2000);
+		if (isElementSelected(driver, element)) {
+			System.out.println("'Over 18' radio button is selected");
+		} else {
+			System.out.println("'Over 18' radio button is selected again");
+		}
+	}
 
-		WebElement ageURadioButton = driver.findElement(By.xpath("//input[@id='under_18']"));
-		ageURadioButton.click();
-		WebElement developmentradioButton = driver.findElement(By.xpath("//input[@id='development']"));
-		developmentradioButton.click();
-		Thread.sleep(5000);
+	@Test
+	public void TC_032_DevelopmentCheckboxIsSelected() {
+		String element = "//input[@id='development']";
+		driver.findElement(By.xpath(element)).click();
+		if (isElementSelected(driver, element)) {
+			System.out.println("'Development' checkbox is selected");
+		} else {
+			System.out.println("'Development' checkbox is selected again");
+		}
+	}
+
+	private boolean isElementSelected(WebDriver driver, String element) {
+		try {
+			WebElement locator;
+			locator = driver.findElement(By.xpath(element));
+			return locator.isSelected();
+		} catch (NoSuchElementException e) {
+			return false;
+		}
 	}
 
 	@AfterClass
