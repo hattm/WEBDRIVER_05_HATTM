@@ -4,10 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -18,7 +17,9 @@ public class Topic_03_WebElement_Browser {
 
 	@BeforeClass
 	public void beforeClass() {
-		driver = new FirefoxDriver();
+		System.setProperty("webdriver.chrome.driver", ".\\driver\\chromedriver.exe");
+		driver = new ChromeDriver();
+		// driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.get("http://daominhdam.890m.com/");
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -45,13 +46,14 @@ public class Topic_03_WebElement_Browser {
 
 	}
 
+	@Test
 	public void TC_02_IsEnable() throws Exception {
 		WebElement emailTextbox = driver.findElement(By.xpath("//input[@id='mail']"));
 		WebElement ageURadioButton = driver.findElement(By.xpath("//input[@id='under_18']"));
 		WebElement passwordText = driver.findElement(By.xpath("//input[@id='password']"));
 		WebElement educationTextArea = driver.findElement(By.xpath("//textarea[@id='edu']"));
 		WebElement job1selectextbox = driver.findElement(By.xpath("//select[@id='job1']"));
-		WebElement developmentradioButton = driver.findElement(By.xpath("//input[@id='development']"));
+		WebElement developmentCheckbox = driver.findElement(By.xpath("//input[@id='development']"));
 		WebElement slider1line = driver.findElement(By.xpath("//input[@id='slider-1']"));
 		WebElement buttonEnabledButton = driver.findElement(By.xpath("//button[@id='button-enabled']"));
 		WebElement ageRadioDisable = driver.findElement(By.xpath("//input[@id='radio-disabled']"));
@@ -66,7 +68,7 @@ public class Topic_03_WebElement_Browser {
 		isControlEnabled(passwordText);
 		isControlEnabled(educationTextArea);
 		isControlEnabled(job1selectextbox);
-		isControlEnabled(developmentradioButton);
+		isControlEnabled(developmentCheckbox);
 		isControlEnabled(slider1line);
 		isControlEnabled(buttonEnabledButton);
 		isControlEnabled(ageRadioDisable);
@@ -79,6 +81,14 @@ public class Topic_03_WebElement_Browser {
 		Thread.sleep(5000);
 	}
 
+	public void TC_03_IsSelected() throws InterruptedException {
+		WebElement ageURadioButton = driver.findElement(By.xpath("//input[@id='under_18']"));
+		WebElement develepmentCheckbox = driver.findElement(By.xpath("//input[@id='development']"));
+		isControlSelected(ageURadioButton);
+		isControlSelected(develepmentCheckbox);
+		Thread.sleep(5000);
+	}
+
 	public void isControlEnabled(WebElement element) {
 		if (element.isEnabled()) {
 			System.out.println("Element is enabled");
@@ -88,37 +98,18 @@ public class Topic_03_WebElement_Browser {
 
 	}
 
-	@Test
-	public void TC_031_Over18RadioIsSelected() throws Exception {
-		String element = "//input[@id='under_18']";
-		driver.findElement(By.xpath(element)).click();
-		Thread.sleep(2000);
-		if (isElementSelected(driver, element)) {
-			System.out.println("'Over 18' radio button is selected");
-		} else {
-			System.out.println("'Over 18' radio button is selected again");
+	public boolean isControlSelected(WebElement element) {
+		if (!element.isSelected()) {
+			element.click();
 		}
+		return true;
+
 	}
 
-	@Test
-	public void TC_032_DevelopmentCheckboxIsSelected() {
-		String element = "//input[@id='development']";
-		driver.findElement(By.xpath(element)).click();
-		if (isElementSelected(driver, element)) {
-			System.out.println("'Development' checkbox is selected");
-		} else {
-			System.out.println("'Development' checkbox is selected again");
-		}
-	}
-
-	private boolean isElementSelected(WebDriver driver, String element) {
-		try {
-			WebElement locator;
-			locator = driver.findElement(By.xpath(element));
-			return locator.isSelected();
-		} catch (NoSuchElementException e) {
-			return false;
-		}
+	// buid framework
+	public boolean isControlSelect(String locator) {
+		WebElement element = driver.findElement(By.xpath(locator));
+		return element.isSelected();
 	}
 
 	@AfterClass
