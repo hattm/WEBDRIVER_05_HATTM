@@ -14,10 +14,10 @@ import org.testng.annotations.Test;
 
 public class Topic_04_Textbox_TextArea_DropdowList {
 	WebDriver driver;
-	String name, dob, address, city, pin, phone, email, password, state, customerID= null, newAddress, newCity;
+	String name, dob, address, city, pin, phone, email, password, state, customerID = null, newAddress, newCity;
 	// BY ELEMENT
 	By nameTextbox = By.xpath("//input[@name='name']");
-	By genderTextbox= By.xpath("//input[@id='gender']");
+	By genderTextbox = By.xpath("//input[@name='gender']");
 	By dobTextbox = By.xpath("//input[@name='dob']");
 	By addressTextArea = By.xpath("//textarea[@name='addr']");
 	By cityTextbox = By.xpath("//input[@name='city']");
@@ -43,9 +43,8 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 		phone = "0123456789";
 		email = "auto" + randomUniqueNumber() + "@gmail.com";
 		password = "123123";
-		newAddress ="333 Le Lai";
-		newCity = " Ho Chi Minh";
-		
+		newAddress = "234 Le Duan";
+		newCity = " Bac Giang";
 
 	}
 
@@ -83,7 +82,7 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 				.isDisplayed());
 
 		driver.findElement(By.xpath("//a[text()='New Customer']")).click();
-		
+
 		// INPUT DATA TO NEW CUSTOMER FORM
 		driver.findElement(nameTextbox).sendKeys(name);
 		driver.findElement(dobTextbox).sendKeys(dob);
@@ -95,46 +94,54 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 		driver.findElement(emailTextbox).sendKeys(email);
 		driver.findElement(passwordTextbox).sendKeys(password);
 		driver.findElement(By.xpath("//input[@name='sub']")).click();
-		
+
 		// GET DYNAMIC CUSTOMER ID
-		customerID= driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText();
-		System.out.println("DYNAMIC CUSTOMER ID="+ customerID);
-		
-		//VERIFY CREATE NEW CUSTOMER CUSSESS
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Customer Name']/following-sibling::td")).getText(), name);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Birthdate']/following-sibling::td")).getText(),dob);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(),address);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(),city);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='State']/following-sibling::td")).getText(),state);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Pin']/following-sibling::td")).getText(),pin);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Mobile No.']/following-sibling::td")).getText(),phone);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Email']/following-sibling::td")).getText(),email);
-		
+		customerID = driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText();
+		System.out.println("DYNAMIC CUSTOMER ID=" + customerID);
+
+		// VERIFY CREATE NEW CUSTOMER CUSSESS
+		Assert.assertEquals(
+				driver.findElement(By.xpath("//td[text()='Customer Name']/following-sibling::td")).getText(), name);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Birthdate']/following-sibling::td")).getText(),
+				dob);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(),
+				address);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(), city);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='State']/following-sibling::td")).getText(),
+				state);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Pin']/following-sibling::td")).getText(), pin);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Mobile No.']/following-sibling::td")).getText(),
+				phone);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Email']/following-sibling::td")).getText(),
+				email);
+
 		driver.findElement(By.xpath("//a[text()='Edit Customer']")).click();
 		driver.findElement(By.xpath("//input[@name='cusid']")).sendKeys(customerID);
 		driver.findElement(By.xpath("//input[@name='AccSubmit']")).click();
-		
-		//CHECK 3 FIELDs(NAME/GENDERT/DATE OF BIRTH)disable
-		System.out.println("AttributeValue= "+ driver.findElement(nameTextbox).getAttribute("disable"));
-		//String AttributeValue= driver.findElement(nameTextbox).getAttribute("disable");
-		Assert.assertTrue(driver.findElement(nameTextbox).getAttribute("disable").equals("On"));
-		Assert.assertTrue(driver.findElement(genderTextbox).getAttribute("disabled").equals("On"));
-		Assert.assertFalse(driver.findElement(dobTextbox).getAttribute("disable").equals("On"));
-		
-		
-		//VERIFY CUSTOMER NAME/ ADDRESS EQUAL INPUT DATA
+
+		// CHECK 3 FIELDs(NAME/GENDERT/DATE OF BIRTH) are disable
+		Assert.assertFalse(driver.findElement(nameTextbox).isEnabled());
+		Assert.assertFalse(driver.findElement(genderTextbox).isEnabled());
+		Assert.assertFalse(driver.findElement(dobTextbox).isEnabled());
+
+		Assert.assertTrue(driver.findElement(cityTextbox).isEnabled());
+
+		// VERIFY CUSTOMER NAME/ ADDRESS EQUAL INPUT DATA
 		Assert.assertEquals(driver.findElement(nameTextbox).getAttribute("value"), name);
-		Assert.assertEquals(driver.findElement(addressTextArea).getText(),address);
-		
+		Assert.assertEquals(driver.findElement(addressTextArea).getText(), address);
+
 		// EDIT DATA FOR ADDRESS/ CITY
+
 		driver.findElement(addressTextArea).sendKeys(newAddress);
+
 		driver.findElement(cityTextbox).sendKeys(newCity);
 		driver.findElement(By.xpath("//input[@name='sub']")).click();
-		
-		//VERIFY EDIT CUSTOMER SUCCESS
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(),newAddress);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(),newCity);
 
+		// VERIFY EDIT CUSTOMER SUCCESS
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(),
+				newAddress);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(),
+				newCity);
 	}
 
 	@AfterClass
