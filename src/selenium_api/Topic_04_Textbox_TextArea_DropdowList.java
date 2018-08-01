@@ -44,7 +44,7 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 		email = "auto" + randomUniqueNumber() + "@gmail.com";
 		password = "123123";
 		newAddress = "234 Le Duan";
-		newCity = " Bac Giang";
+		newCity = "Bac Giang";
 
 	}
 
@@ -132,16 +132,15 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 
 		// EDIT DATA FOR ADDRESS/ CITY
 
+		driver.findElement(addressTextArea).clear();
 		driver.findElement(addressTextArea).sendKeys(newAddress);
-
+		driver.findElement(cityTextbox).clear();
 		driver.findElement(cityTextbox).sendKeys(newCity);
 		driver.findElement(By.xpath("//input[@name='sub']")).click();
 
 		// VERIFY EDIT CUSTOMER SUCCESS
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(),
-				newAddress);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(),
-				newCity);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(),newAddress);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(),newCity);
 	}
 
 	@AfterClass
