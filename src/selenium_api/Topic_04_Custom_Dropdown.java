@@ -3,8 +3,13 @@ package selenium_api;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.lang.model.element.Element;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -31,7 +37,7 @@ public class Topic_04_Custom_Dropdown {
 	@Test
 	public void TC_01() throws Exception {
 		
-	// Jquery
+	/*// Jquery
 	driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	driver.manage().window().maximize();
@@ -51,8 +57,48 @@ public class Topic_04_Custom_Dropdown {
 	Assert.assertTrue(driver.findElement(By.xpath("//div[@class='mat-select-value']//span[text()='Tacos']")).isDisplayed());
 	
 	selectCustomDropdownList("//mat-select[@placeholder='State']","//mat-option/span","Washington");
-	Assert.assertTrue(driver.findElement(By.xpath("//div[@class='mat-select-value']//span[text()='Washington']")).isDisplayed());	
+	Assert.assertTrue(driver.findElement(By.xpath("//div[@class='mat-select-value']//span[text()='Washington']")).isDisplayed());*/	
 	
+	
+	/*// Telerik KendoUI
+	driver.get("https://demos.telerik.com/kendo-ui/dropdownlist/index");
+	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	driver.manage().window().maximize();
+	
+	
+	selectCustomDropdownList("//span[@aria-labelledby='color_label']", "//ul[@id='color_listbox']/li", "Grey");
+	Assert.assertTrue(driver.findElement(By.xpath("//span[@aria-labelledby='color_label']//span[@class='k-input' and text()='Grey']/parent::span")).isDisplayed());
+	
+	selectCustomDropdownList("//span[@aria-labelledby='size_label']", "//ul[@id='size_listbox']/li", "L - 7 1/8\"");
+	Assert.assertTrue(driver.findElement(By.xpath("//span[@aria-labelledby='size_label']//span[@class='k-input' and text()='L - 7 1/8\"']/parent::span")).isDisplayed());
+	Thread.sleep(3000);*/
+		
+	
+	/*// Vuejs
+	driver.get("https://mikerodham.github.io/vue-dropdowns/");
+	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	driver.manage().window().maximize();
+	
+	selectCustomDropdownList("//div[@class='btn-group']/li", "//div[@class='btn-group']/ul/li", "Third Option");
+	Assert.assertTrue(driver.findElement(By.xpath("//li[@class='dropdown-toggle' and contains(text(),'Third Option')]")).isDisplayed());
+	*/
+	
+	// jquery Editable
+	driver.get("http://indrimuska.github.io/jquery-editable-select/");
+	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	driver.manage().window().maximize();
+	
+	/* selectCustomDropdownList("//select[@id='base']", "//select[@id='base']/option", "Jaguar"); 
+	 Assert.assertTrue(driver.findElement(By.xpath("//select[@id='base']/option[text()='Jaguar']")).isDisplayed());*/
+
+	driver.findElement(By.xpath("//div[@id='basic-place']//input[@type='text']")).clear();
+	driver.findElement(By.xpath("//div[@id='basic-place']//input[@type='text']")).sendKeys("R");
+	
+	selectCustomDropdownList("//div[@id='basic-place']","//div[@id='basic-place']/ul", "Renault");
+	Assert.assertTrue(driver.findElement(By.xpath("//div[@id='basic-place']/ul/li[text()='Renault']")).isDisplayed());
+	Thread.sleep(5000);
+	 
+
 	}
 	public void selectCustomDropdownList(String dropdown, String listItems, String valueItem) throws Exception {
 		// Click vào dropdown
@@ -68,12 +114,11 @@ public class Topic_04_Custom_Dropdown {
 		// Dùng vòng lặp for duyệt qua từng phần tử
 		for (WebElement item : allItems) {
 			System.out.println(item.getText());
-			if (item.getText().equals(valueItem)) {
+			if (item.getText().trim().equals(valueItem)) {
 				// Croll item
 				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", item);
 				Thread.sleep(3000);
-				// Nếu actual text = expected text thì click vào phần tử đó và break khỏi vòng
-				// lặp
+				// Nếu actual text = expected text thì click vào phần tử đó và break khỏi vòng lặp
 				item.click();
 				Thread.sleep(3000);
 				break;
