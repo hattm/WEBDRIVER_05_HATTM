@@ -36,7 +36,7 @@ public class Topic_06_Button_Radio_Checkbox {
 		Assert.assertTrue(driver.findElement(By.xpath("//form[@id='form-validate']")).isDisplayed());
 		Assert.assertEquals(driver.getCurrentUrl(), "http://live.guru99.com/index.php/customer/account/create/");
 	}
-	@Test
+	
 	public void TC_02_Custom_Checkbox() throws Exception {
 		driver.get("https://demos.telerik.com/kendo-ui/styling/checkboxes");
 
@@ -75,16 +75,17 @@ public class Topic_06_Button_Radio_Checkbox {
 		Assert.assertFalse(isElementSelected(dualZoneCheckbox));
 	}
 
-
+	@Test
 	public void TC_03_Custom_Radionbutton() throws Exception {
 		driver.get("http://demos.telerik.com/kendo-ui/styling/radios");
+		/*driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().window().maximize();*/
 		String petrol147kWRadionbutton = "//label[text()='2.0 Petrol, 147kW']/preceding-sibling::input";
 		clickElementByJavascript(petrol147kWRadionbutton);
-		Thread.sleep(4000);
 		Assert.assertTrue(isElementSelected(petrol147kWRadionbutton));
 	}
 
-	@Test
+	
 	public void TC_04() {
 
 	}
