@@ -37,7 +37,7 @@ public class Topic_05_Custom_Dropdown {
 	@Test
 	public void TC_01() throws Exception {
 		
-	/*// Jquery
+	// Jquery
 	driver.get("http://jqueryui.com/resources/demos/selectmenu/default.html");
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	driver.manage().window().maximize();
@@ -57,10 +57,10 @@ public class Topic_05_Custom_Dropdown {
 	Assert.assertTrue(driver.findElement(By.xpath("//div[@class='mat-select-value']//span[text()='Tacos']")).isDisplayed());
 	
 	selectCustomDropdownList("//mat-select[@placeholder='State']","//mat-option/span","Washington");
-	Assert.assertTrue(driver.findElement(By.xpath("//div[@class='mat-select-value']//span[text()='Washington']")).isDisplayed());*/	
+	Assert.assertTrue(driver.findElement(By.xpath("//div[@class='mat-select-value']//span[text()='Washington']")).isDisplayed());	
 	
 	
-	/*// Telerik KendoUI
+	// Telerik KendoUI
 	driver.get("https://demos.telerik.com/kendo-ui/dropdownlist/index");
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	driver.manage().window().maximize();
@@ -71,28 +71,28 @@ public class Topic_05_Custom_Dropdown {
 	
 	selectCustomDropdownList("//span[@aria-labelledby='size_label']", "//ul[@id='size_listbox']/li", "L - 7 1/8\"");
 	Assert.assertTrue(driver.findElement(By.xpath("//span[@aria-labelledby='size_label']//span[@class='k-input' and text()='L - 7 1/8\"']/parent::span")).isDisplayed());
-	Thread.sleep(3000);*/
+	Thread.sleep(3000);
 		
 	
-	/*// Vuejs
+	// Vuejs
 	driver.get("https://mikerodham.github.io/vue-dropdowns/");
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	driver.manage().window().maximize();
 	
 	selectCustomDropdownList("//div[@class='btn-group']/li", "//div[@class='btn-group']/ul/li", "Third Option");
 	Assert.assertTrue(driver.findElement(By.xpath("//li[@class='dropdown-toggle' and contains(text(),'Third Option')]")).isDisplayed());
-	*/
+	
 	
 	// jquery Editable
 	driver.get("http://indrimuska.github.io/jquery-editable-select/");
 	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	driver.manage().window().maximize();
 	
-	/* selectCustomDropdownList("//select[@id='base']", "//select[@id='base']/option", "Jaguar"); 
-	 Assert.assertTrue(driver.findElement(By.xpath("//select[@id='base']/option[text()='Jaguar']")).isDisplayed());*/
+	 selectCustomDropdownList("//select[@id='base']", "//select[@id='base']/option", "Jaguar"); 
+	 Assert.assertTrue(driver.findElement(By.xpath("//select[@id='base']/option[text()='Jaguar']")).isDisplayed());
 
 	driver.findElement(By.xpath("//div[@id='basic-place']//input[@type='text']")).clear();
-	driver.findElement(By.xpath("//div[@id='basic-place']//input[@type='text']")).sendKeys("R");
+	driver.findElement(By.xpath("//div[@id='basic-place']//input[@type='text']")).sendKeys("Jaguar");
 	
 	}
 	public void selectCustomDropdownList(String dropdown, String listItems, String valueItem) throws Exception {
@@ -100,9 +100,9 @@ public class Topic_05_Custom_Dropdown {
 		WebElement dropdownElement = driver.findElement(By.xpath(dropdown));
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",dropdownElement);
 		dropdownElement.click();
-		// Get tất cả item trong dropdown vào 1 list element (List <WebElement>)
+		// Get tất cả item trong dropdown vào 1 list element(List <WebElement>)
 		List<WebElement> allItems = driver.findElements(By.xpath(listItems));
-		// Wait để tất cả phần tử trong dropdown được hiển thị
+		//Wait để tất cả phần tử trong dropdown được hiển thị
 		wait.until(ExpectedConditions.visibilityOfAllElements(allItems));
 		
 	

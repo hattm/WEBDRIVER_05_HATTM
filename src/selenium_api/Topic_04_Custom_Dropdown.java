@@ -101,27 +101,27 @@ public class Topic_04_Custom_Dropdown {
 
 	}
 	public void selectCustomDropdownList(String dropdown, String listItems, String valueItem) throws Exception {
-		// Click vào dropdown
-		WebElement dropdownElement = driver.findElement(By.xpath(dropdown));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",dropdownElement);
-		dropdownElement.click();
-		// Get tất cả item trong dropdown vào 1 list element (List <WebElement>)
-		List<WebElement> allItems = driver.findElements(By.xpath(listItems));
-		// Wait để tất cả phần tử trong dropdown được hiển thị
-		wait.until(ExpectedConditions.visibilityOfAllElements(allItems));
+			// Click vào dropdown
+			WebElement dropdownElement = driver.findElement(By.xpath(dropdown));
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",dropdownElement);
+			dropdownElement.click();
+			// Get tất cả item trong dropdown vào 1 list element(List <WebElement>)
+			List<WebElement> allItems = driver.findElements(By.xpath(listItems));
+			//Wait để tất cả phần tử trong dropdown được hiển thị
+			wait.until(ExpectedConditions.visibilityOfAllElements(allItems));
+			
 		
-	
-		// Dùng vòng lặp for duyệt qua từng phần tử
-		for (WebElement item : allItems) {
-			System.out.println(item.getText());
-			if (item.getText().trim().equals(valueItem)) {
-				// Croll item
-				((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", item);
-				Thread.sleep(3000);
-				// Nếu actual text = expected text thì click vào phần tử đó và break khỏi vòng lặp
-				item.click();
-				Thread.sleep(3000);
-				break;
+			// Dùng vòng lặp for duyệt qua từng phần tử
+			for (WebElement item : allItems) {
+				System.out.println(item.getText());
+				if (item.getText().trim().equals(valueItem)) {
+					// Croll item
+					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", item);
+					Thread.sleep(3000);
+					// Nếu actual text = expected text thì click vào phần tử đó và break khỏi vòng lặp
+					item.click();
+					Thread.sleep(3000);
+					break;
 			}
 		}
 	}
