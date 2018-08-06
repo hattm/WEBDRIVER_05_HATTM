@@ -12,7 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_04_Textbox_TextArea_DropdowList {
+public class Topic_05_Textbox_TextArea_DropdowList {
 	WebDriver driver;
 	String name, dob, address, city, pin, phone, email, password, state, customerID = null, newAddress, newCity;
 	// BY ELEMENT
@@ -47,7 +47,7 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 		newCity = "Bac Giang";
 
 	}
-
+	@Test
 	public void TC_01_DropDowList() throws InterruptedException {
 		driver.get("http://daominhdam.890m.com/");
 
@@ -70,7 +70,7 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 
 	}
 
-	@Test
+
 	public void TC_02_Textbox_TextArea() {
 		driver.get("http://demo.guru99.com/v4");
 
