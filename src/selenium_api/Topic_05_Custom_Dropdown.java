@@ -104,8 +104,6 @@ public class Topic_05_Custom_Dropdown {
 		List<WebElement> allItems = driver.findElements(By.xpath(listItems));
 		//Wait để tất cả phần tử trong dropdown được hiển thị
 		wait.until(ExpectedConditions.visibilityOfAllElements(allItems));
-		
-	
 		// Dùng vòng lặp for duyệt qua từng phần tử
 		for (WebElement item : allItems) {
 			System.out.println(item.getText());
