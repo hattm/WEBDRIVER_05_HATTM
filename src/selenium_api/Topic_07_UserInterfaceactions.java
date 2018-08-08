@@ -105,7 +105,6 @@ public class Topic_07_UserInterfaceactions {
 	 // Right Click
 	 action.contextClick(righClikButton).perform();
 	 
-	 
 	 WebElement quitBefore = driver.findElement(By.xpath("//li[contains(@class,'context-menu-icon-quit')]"));
 	 // Hover to Quit
 	 action.moveToElement(quitBefore).perform();
