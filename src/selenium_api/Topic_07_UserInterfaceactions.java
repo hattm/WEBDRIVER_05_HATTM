@@ -42,15 +42,21 @@ public class Topic_07_UserInterfaceactions {
 	
 	// Verify tooltip displayed
 	Assert.assertEquals(driver.findElement(By.xpath("//div[@role='tooltip']//div[@class='tooltip-inner']")).getText(), "Hooray!");
-	
-	
-  }
-  @Test
-  public void TC_012__HoverMousce() {
-	  driver.get("http://www.myntra.com/");
-	  
   }
   
+  @Test
+  public void TC_012__HoverMousce() throws Exception {
+	  driver.get("http://www.myntra.com/");
+	  WebElement logoutButton= driver.findElement(By.xpath("//div[@class='desktop-userIconsContainer']"));
+	  
+	  Actions action = new Actions(driver);
+	  action.moveToElement(logoutButton).perform();
+	  
+	  driver.findElement(By.xpath("//a[text()='login']")).click();
+	  Assert.assertTrue(driver.findElement(By.xpath("//div[@id='mountRoot']//div[@class='login-box']")).isDisplayed());
+	  Thread.sleep(5000);
+
+  }
   
   public void TC_02_ClickAndHold() throws Exception {
 	  driver.get("http://jqueryui.com/resources/demos/selectable/display-grid.html");
@@ -99,9 +105,7 @@ public class Topic_07_UserInterfaceactions {
 	Assert.assertEquals(alert.getText(), "The Button was double-clicked.");
 	alert.accept();
 	
-	
   }
-
 
   public void TC_04_RighClick() {
 	  driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
@@ -146,7 +150,6 @@ public class Topic_07_UserInterfaceactions {
 	
   }
 
-  @Test
   public void TC_05_Case02_DragAnDrop() {
 	  driver.get("http://jqueryui.com/resources/demos/droppable/default.html");
 	  
