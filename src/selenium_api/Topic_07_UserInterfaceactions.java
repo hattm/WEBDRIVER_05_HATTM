@@ -1,6 +1,9 @@
 package selenium_api;
 
 import org.testng.annotations.Test;
+
+import com.sun.jna.platform.dnd.DropHandler;
+
 import org.testng.annotations.BeforeClass;
 
 import java.util.List;
@@ -26,7 +29,7 @@ public class Topic_07_UserInterfaceactions {
 		  
 	  }
 	
-  public void TC_01_HoverMousce() throws Exception {
+  public void TC_011_HoverMousce() throws Exception {
 	  driver.get(" http://daominhdam.890m.com/");  
 	WebElement hoverText= driver.findElement(By.xpath("//a[text()='Hover over me']"));
 	
@@ -41,6 +44,10 @@ public class Topic_07_UserInterfaceactions {
 	Assert.assertEquals(driver.findElement(By.xpath("//div[@role='tooltip']//div[@class='tooltip-inner']")).getText(), "Hooray!");
 	
 	
+  }
+  @Test
+  public void TC_012__HoverMousce() {
+	  
   }
   
   
@@ -94,7 +101,7 @@ public class Topic_07_UserInterfaceactions {
 	
   }
 
-  @Test
+
   public void TC_04_RighClick() {
 	  driver.get("http://swisnl.github.io/jQuery-contextMenu/demo.html");
 	  
@@ -121,11 +128,49 @@ public class Topic_07_UserInterfaceactions {
 	
   }
 
-  public void TC_05() {
+  public void TC_05_Case01_DragAnDrop() {
+
+	  driver.get("http://demos.telerik.com/kendo-ui/dragdrop/angular");
+	  
+	  WebElement sourceElement = driver.findElement(By.xpath("//div[@id='draggable']"));
+	  WebElement targetElement = driver.findElement(By.xpath("//div[@id='droptarget']"));
+	  Assert.assertEquals(targetElement.getText(),"Drag the small circle here.");
+	  
+	  
+	  Actions action = new Actions(driver);
+	  action.dragAndDrop(sourceElement,targetElement).perform();
+	  Assert.assertEquals(targetElement.getText(),"You did great!");
+
+	  
 	
   }
+
+  @Test
+  public void TC_05_Case02_DragAnDrop() {
+	  driver.get("http://jqueryui.com/resources/demos/droppable/default.html");
+	  
+	  WebElement draggableElement = driver.findElement(By.xpath("//div[@id='draggable']"));
+	  WebElement droggableElement = driver.findElement(By.xpath("//div[@id='droppable']"));
+	  Assert.assertEquals(droggableElement.getText(), "Drop here");
+	  
+	  Actions action = new Actions(driver);
+	  action.dragAndDrop(draggableElement, droggableElement).perform();
+	  Assert.assertEquals(droggableElement.getText(), "Dropped!");
+	  
+  }
   
-  
+  public void TC_06_DragAndDrop_HTML5() throws Exception {
+driver.get("https://html5demos.com/drag/#");
+	  
+	  WebElement sourceElement = driver.findElement(By.xpath("//a[@id='one']"));
+	  WebElement targetElement = driver.findElement(By.xpath("//div[@id='bin']"));
+	  
+	  Actions action = new Actions(driver);
+	  action.click(sourceElement).moveToElement(targetElement).release(targetElement).build().perform();
+	  Thread.sleep(5000);
+	  Assert.assertFalse(sourceElement.isDisplayed());
+	  
+  }
 
   @AfterClass
   public void afterClass() {
