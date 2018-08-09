@@ -47,6 +47,7 @@ public class Topic_07_UserInterfaceactions {
   }
   @Test
   public void TC_012__HoverMousce() {
+	  driver.get("http://www.myntra.com/");
 	  
   }
   
