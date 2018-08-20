@@ -120,7 +120,7 @@ public class Topic_08_Iframe_Windows {
 		/* CASE 01- 2 window / 2 tabs: switch via GUID */
 		// Get GUID of current page (parent page)
 		String parentGUID = driver.getWindowHandle();
-		
+		System.out.println("parentGUID= "+ parentGUID);
 		System.out.println("Title before = " + driver.getTitle());
 
 		// Click to new window
@@ -146,7 +146,28 @@ public class Topic_08_Iframe_Windows {
 
 
 	public void TC_03_HdfcBankWindows() {
+	driver.get("http://www.hdfcbank.com/");
+	
+	String parentGUID = driver.getWindowHandle();
+	System.out.println("Parent ID = "+ parentGUID);
+	
+	// Kiểm tra và close quảng cáo nếu có xuất hiện
+	List<WebElement> notificationIfrmage = driver
+			.findElements(By.xpath("//iframe[@id='vizury-notification-template']"));
+	System.out.println("Number element = " + notificationIfrmage.size());
 
+	if (notificationIfrmage.size() > 0) {
+		driver.switchTo().frame(notificationIfrmage.get(0));
+		WebElement closeIcon = driver.findElement(By.xpath("//div[@id='div-close']"));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].click();", closeIcon);
+		driver.switchTo().defaultContent();
+
+	}
+	
+	// Click Agri link and switch to Agri link window 
+	driver.findElement(By.xpath("//a[text()='Agri']")).click();
+	switchToWindowByTitile("HDFC Bank Kisan Dhan Vikas e-Kendra");
 		
 	}
 	
