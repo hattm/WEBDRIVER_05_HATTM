@@ -4,6 +4,7 @@ import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -25,12 +26,11 @@ public class Topic_08_Iframe_Windows {
 	public void beforeClass() {
 		driver = new FirefoxDriver();
 		wait = new WebDriverWait(driver, 10);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
 	}
 
-	@Test
 	public void TC_01_Iframe_Frame() {
 		driver.get("http://www.hdfcbank.com/");
 
@@ -79,50 +79,148 @@ public class Topic_08_Iframe_Windows {
 
 		// Check image =6
 		Assert.assertEquals(bannerImageNumber, 6);
-		
 
 		// Check all image are presence
 		wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(bannerImagesXpath));
 		// Assert.assertTrue(image.isDisplayed());
-		
+
 		// Switch to default content
 		driver.switchTo().defaultContent();
-		
+
 		// Step 05: Verify flipper banner được hiển thị và có 8 items
 		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='flipBanner']")).isDisplayed(), true);
 		Assert.assertTrue(driver.findElement(By.xpath("//div[@class='flipBanner']")).isDisplayed());
-		
-		List<WebElement>flipBannerImages = driver.findElements(By.xpath("//div[@class='flipBanner']//img[@class='front icon']"));
+
+		List<WebElement> flipBannerImages = driver
+				.findElements(By.xpath("//div[@class='flipBanner']//img[@class='front icon']"));
 		int flipBannerImageNumber = flipBannerImages.size();
-		Assert.assertEquals(flipBannerImageNumber,8);
+		Assert.assertEquals(flipBannerImageNumber, 8);
 		int i = 0;
-		
-		// For - Each 
-		for(WebElement image: flipBannerImages) {
+
+		// For - Each
+		for (WebElement image : flipBannerImages) {
 			Assert.assertTrue(image.isDisplayed());
-			 i++;
+			i++;
 			System.out.println("Image [" + i + "] Displayed!");
-			
+
 		}
-		
+
 		// For
-		for(int x= 0; x < flipBannerImageNumber; x++) {
+		for (int x = 0; x < flipBannerImageNumber; x++) {
 			Assert.assertTrue(flipBannerImages.get(x).isDisplayed());
 			System.out.println("Image [" + x + "] Displayed!");
-			
+
 		}
+
+	}
+	@Test
+	public void TC_02_Windows() {
+		driver.get("http://daominhdam.890m.com/");
+
+		/* CASE 01- 2 window / 2 tabs: switch via GUID */
+		// Get GUID of current page (parent page)
+		String parentGUID = driver.getWindowHandle();
+		
+		System.out.println("Title before = " + driver.getTitle());
+
+		// Click to new window
+		driver.findElement(By.xpath("//a[text()='Click Here']")).click();
+
+		// Swith to New tab or new window
+		//switchToChildwindowByGUID(parentGUID);
+		switchToWindowByTitile("Google");
+		
+		
+		// Verify witch sucess
+		String googleTitle = driver.getTitle();
+		System.out.println("Title after = "+ googleTitle);
+		Assert.assertEquals(googleTitle, "Google");
+
+		closeAllWithoutParentWindows(parentGUID);
+		
+		// Verify switch to parent success
+		Assert.assertEquals(driver.getTitle(), "SELENIUM WEBDRIVER FORM DEMO");
+		/* CASE O2- >= 2 window / 2tabs : witch via page title */
+
+	}
+
+
+	public void TC_03_HdfcBankWindows() {
+
+		
+	}
+	
+	@AfterClass
+	public void afterClass() {
+		//driver.quit();
+	}
+
+
+	public void switchToChildwindowByGUID(String parentID) {
+		// Get all current windows/ tabs
+		Set<String> allWindows = driver.getWindowHandles();
+
+		// Duyệt qua tất cả các windows/ tabs
+		for (String runWindow : allWindows) {
+			
+			// Nếu window/ tab ID nào mà khác vs parent ID thì switch qua
+			if (!runWindow.equals(parentID)) {
+				driver.switchTo().window(runWindow);
+				break;
+			}
+
+		}
+
+	}
+	
+	public void switchToWindowByTitile(String expectedTitle) {
+		// Get all current windows/ tabs
+		Set<String> allWindows = driver.getWindowHandles();
+	
+		// Lăp từng window/ tab
+		for(String runWindows:allWindows) {
+			// Switch vào từng window trước
+			driver.switchTo().window(runWindows);
+			
+			// Get ra title của window/ tab mà mình đã switch quá
+			String actualTitle = driver.getTitle();
+			
+			// Kiểm tra nếu title mình đã get mà bằng vs expected title mà mình đã truyền vào
+			if(actualTitle.equals(expectedTitle)) {
+				// Thoart khỏi vòng lặp
+				break;
+			}
+		}
+	}
+	
+	public boolean closeAllWithoutParentWindows(String parentGUID) {
+		// Get all current windows/ tabs
+		Set<String> allWindows = driver.getWindowHandles();
+		
+		// Duyệt qua từng window/ tab
+		for(String runWindows:allWindows) {
+			
+			// Nếu windows/ tabs guid khác vs parent id
+			if(!runWindows.equals(parentGUID)) {
+				// Switch qua windows/ tab đó
+				driver.switchTo().window(runWindows);
+				
+				// Close window/ tab đó
+				driver.close();
+			}
 			
 		}
 		
-
-
-	public void TC_02() {
-
+		// Switch về parent windows
+		driver.switchTo().window(parentGUID);
+		
+		// Kiểm tra xem có còn đúng 1 window hay ko
+		if(driver.getWindowHandles().size()==1)
+			return true;
+		else
+			return false;
 	}
-
-	@AfterClass
-	public void afterClass() {
-		driver.quit();
-	}
-
+	
+	
+	
 }
