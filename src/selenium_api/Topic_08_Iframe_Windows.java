@@ -25,7 +25,9 @@ public class Topic_08_Iframe_Windows {
 	@BeforeClass
 	public void beforeClass() {
 		driver = new FirefoxDriver();
+		// Explicit wait
 		wait = new WebDriverWait(driver, 10);
+		// Implicit wait/ Global wait findElement/ findElements
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 
@@ -113,7 +115,7 @@ public class Topic_08_Iframe_Windows {
 		}
 
 	}
-	@Test
+	
 	public void TC_02_Windows() {
 		driver.get("http://daominhdam.890m.com/");
 
@@ -144,7 +146,7 @@ public class Topic_08_Iframe_Windows {
 
 	}
 
-
+	@Test
 	public void TC_03_HdfcBankWindows() {
 	driver.get("http://www.hdfcbank.com/");
 	
@@ -152,6 +154,7 @@ public class Topic_08_Iframe_Windows {
 	System.out.println("Parent ID = "+ parentGUID);
 	
 	// Kiểm tra và close quảng cáo nếu có xuất hiện
+	overrideGlobalWait(15);
 	List<WebElement> notificationIfrmage = driver
 			.findElements(By.xpath("//iframe[@id='vizury-notification-template']"));
 	System.out.println("Number element = " + notificationIfrmage.size());
@@ -169,11 +172,31 @@ public class Topic_08_Iframe_Windows {
 	driver.findElement(By.xpath("//a[text()='Agri']")).click();
 	switchToWindowByTitile("HDFC Bank Kisan Dhan Vikas e-Kendra");
 		
+	
+	// Click Account Details and switch to Account Details tab
+	driver.findElement(By.xpath("//p[text()='Account Details']")).click();
+	switchToWindowByTitile("Welcome to HDFC Bank NetBanking");
+	
+	// Switch to footer frame
+	WebElement footerFrame = driver.findElement(By.xpath("//frame[@name='footer']"));
+	driver.switchTo().frame(footerFrame);
+	
+	// Click Privacy Policy and switch to Privacy Policy tab
+	driver.findElement(By.xpath("//a[text()='Privacy Policy']")).click();
+	switchToWindowByTitile("HDFC Bank - Leading Bank in India, Banking Services, Private Banking, Personal Loan, Car Loan");
+	
+	// Click CSR link
+	driver.findElement(By.xpath("//a[text()='CSR']")).click();
+	
+	closeAllWithoutParentWindows(parentGUID);
+	Assert.assertEquals(driver.getTitle(), "HDFC Bank: Personal Banking Services");
+	
+	
 	}
 	
 	@AfterClass
 	public void afterClass() {
-		//driver.quit();
+		driver.quit();
 	}
 
 
@@ -200,6 +223,7 @@ public class Topic_08_Iframe_Windows {
 	
 		// Lăp từng window/ tab
 		for(String runWindows:allWindows) {
+			System.out.println("WindowID= "+ runWindows);
 			// Switch vào từng window trước
 			driver.switchTo().window(runWindows);
 			
@@ -220,6 +244,7 @@ public class Topic_08_Iframe_Windows {
 		
 		// Duyệt qua từng window/ tab
 		for(String runWindows:allWindows) {
+			System.out.println("WindowID= "+ runWindows);
 			
 			// Nếu windows/ tabs guid khác vs parent id
 			if(!runWindows.equals(parentGUID)) {
@@ -243,5 +268,7 @@ public class Topic_08_Iframe_Windows {
 	}
 	
 	
-	
+	public void overrideGlobalWait(long timeout) {
+		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
+	}
 }
