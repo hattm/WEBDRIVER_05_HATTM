@@ -24,10 +24,10 @@ import org.testng.annotations.AfterClass;
 public class Topic_10_UploadFile {
 	WebDriver driver;
 	String projectDirectory = System.getProperty("user.dir");
-	String fileName_01 = "01.png";
+	String fileName = "Upload.png";
 	String fileName_02 = "02.png";
 	String fileName_03 = "03.png";
-	String uploadFilePath00 = projectDirectory + "\\imges\\" + fileName_01;
+	String uploadFilePath00 = projectDirectory + "\\imges\\" + fileName;
 	String uploadFilePath01 = projectDirectory + "\\imges\\" + fileName_02;
 	String uploadFilePath02 = projectDirectory + "\\imges\\" + fileName_03;
 	
@@ -40,8 +40,6 @@ public class Topic_10_UploadFile {
 
 	@BeforeClass
 	public void beforeClass() {
-
-		
 		/* System.setProperty("webdriver.chrome.driver", ".\\driver\\chromedriver.exe"); 
 		driver = new ChromeDriver();*/
 		 
@@ -60,38 +58,42 @@ public class Topic_10_UploadFile {
 		driver.get("http://blueimp.github.io/jQuery-File-Upload/");
 
 		WebElement uploadElement = driver.findElement(By.xpath("//input[@type='file']"));
-		String summaryFile = "";
+		
 		uploadElement.sendKeys(uploadFilePath00);
 
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName + "']")).isDisplayed());
-
+	
 		driver.findElement(By.xpath("//table//button[@class='btn btn-primary start']")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']//a[@title='" + fileName + "']")).isDisplayed());
+		
 
 	}
-
+	
 	public void TC_02_AutoIT() throws IOException, Exception {
 		driver.get("http://blueimp.github.io/jQuery-File-Upload/");
 
 		// Chrome/ Firefox/ IE
 		WebElement uploadElement = driver.findElement(By.cssSelector(".fileinput-button"));
 		uploadElement.click();
-
-		// Runtime.getRuntime().exec(new String[] { chromeUpload, uploadFilePath });
-		// Runtime.getRuntime().exec(new String[] { firefoxUpload, uploadFilePath });
-		Runtime.getRuntime().exec(new String[] { ieUpload, uploadFilePath });
+		
+		 //Runtime.getRuntime().exec(new String[] { chromeUpload, uploadFilePath00 });
+		 //Runtime.getRuntime().exec(new String[] { firefoxUpload, uploadFilePath00 });
+		 Thread.sleep(3000);
+		Runtime.getRuntime().exec(new String[] { ieUpload, uploadFilePath00 });
 
 		// verify uploaded
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName + "']")).isDisplayed());
+		
 		driver.findElement(By.xpath("//table//button[@class='btn btn-primary start']")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']//a[@title='" + fileName + "']")).isDisplayed());
+		
 	}
-
+	
 	public void TC_03_Robot() throws Exception {
 		driver.get("http://blueimp.github.io/jQuery-File-Upload/");
 
 		// Defile location of fileName
-		StringSelection select = new StringSelection(uploadFilePath);
+		StringSelection select = new StringSelection(uploadFilePath00);
 
 		// Copy location to clipboard
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(select, null);
@@ -132,7 +134,7 @@ public class Topic_10_UploadFile {
 
 		driver.get("https://encodable.com/uploaddemo/");
 
-		driver.findElement(By.xpath("//input[@type='file']")).sendKeys(uploadFilePath);
+		driver.findElement(By.xpath("//input[@type='file']")).sendKeys(uploadFilePath00);
 
 		WebElement uploadDropdown = driver.findElement(By.xpath("//select[@name='subdir1']"));
 		Select select = new Select(uploadDropdown);
@@ -151,11 +153,6 @@ public class Topic_10_UploadFile {
 		driver.findElement(By.xpath("//a[text()='"+ folderName +"']")).click();
 		
 		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='"+ fileName + "']")).isDisplayed());
-
-		
-		
-		
-		
 		
 	}
 
