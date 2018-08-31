@@ -6,8 +6,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -35,7 +33,7 @@ public class All_API {
 		Assert.assertEquals(title, "Guru99 Bank Home Page");
 
 		// Trả về page id (GUID) của page hiện tại -> Windows (*)
-		String parent_ID = driver.getWindowHandle();
+		//String parent_ID = driver.getWindowHandle();
 
 		// Trả về page id của tất cả các page -> Windows (*)
 		driver.getWindowHandles();
@@ -105,7 +103,7 @@ public class All_API {
 		alert.accept();
 		alert.dismiss();
 		alert.sendKeys("");
-		String abc = alert.getText();
+		//String abc = alert.getText();
 
 		// Frame/ iframe (*)
 		driver.switchTo().frame("");
@@ -133,20 +131,20 @@ public class All_API {
 		Assert.assertEquals(passwordPlaceholder, "Textbox is disabled");
 
 		// Auto GUI (Graphic User Interface)
-		String backgroundColor = email_Textbox.getCssValue("background-color");
+		//String backgroundColor = email_Textbox.getCssValue("background-color");
 		// #5fcf80
-		String color = email_Textbox.getCssValue("color");
+		//String color = email_Textbox.getCssValue("color");
 		// yellow
 
 		// Trả về vị trí của element trong màn hình
-		Point locator = email_Textbox.getLocation();
+		//Point locator = email_Textbox.getLocation();
 
 		// Trả về kích thước của element (rộng + cao)
-		Dimension size = email_Textbox.getSize();
+		//Dimension size = email_Textbox.getSize();
 
 		// Trả lại text của element đó (*)
 		// .//*[@id='advice-required-entry-email']
-		String textElement = email_Textbox.getText();
+		//String textElement = email_Textbox.getText();
 		// This is a required field.
 
 		// Kiểm tra xem 1 element có hiển thị hay ko -> all elements (*)

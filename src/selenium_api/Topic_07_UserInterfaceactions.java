@@ -1,14 +1,9 @@
 package selenium_api;
 
 import org.testng.annotations.Test;
-
-import com.sun.jna.platform.dnd.DropHandler;
-
 import org.testng.annotations.BeforeClass;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
