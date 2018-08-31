@@ -27,7 +27,7 @@ public class Topic_10_UploadFile {
 	String fileName = "Upload.png";
 	String fileName_02 = "02.png";
 	String fileName_03 = "03.png";
-	String uploadFilePath00 = projectDirectory + "\\imges\\" + fileName;
+	String uploadFilePath = projectDirectory + "\\imges\\" + fileName;
 	String uploadFilePath01 = projectDirectory + "\\imges\\" + fileName_02;
 	String uploadFilePath02 = projectDirectory + "\\imges\\" + fileName_03;
 	
@@ -59,7 +59,7 @@ public class Topic_10_UploadFile {
 
 		WebElement uploadElement = driver.findElement(By.xpath("//input[@type='file']"));
 		
-		uploadElement.sendKeys(uploadFilePath00);
+		uploadElement.sendKeys(uploadFilePath);
 
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName + "']")).isDisplayed());
 	
@@ -79,7 +79,7 @@ public class Topic_10_UploadFile {
 		 //Runtime.getRuntime().exec(new String[] { chromeUpload, uploadFilePath00 });
 		 //Runtime.getRuntime().exec(new String[] { firefoxUpload, uploadFilePath00 });
 		 Thread.sleep(3000);
-		Runtime.getRuntime().exec(new String[] { ieUpload, uploadFilePath00 });
+		Runtime.getRuntime().exec(new String[] { ieUpload, uploadFilePath});
 
 		// verify uploaded
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName + "']")).isDisplayed());
@@ -93,7 +93,7 @@ public class Topic_10_UploadFile {
 		driver.get("http://blueimp.github.io/jQuery-File-Upload/");
 
 		// Defile location of fileName
-		StringSelection select = new StringSelection(uploadFilePath00);
+		StringSelection select = new StringSelection(uploadFilePath);
 
 		// Copy location to clipboard
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(select, null);
@@ -134,7 +134,7 @@ public class Topic_10_UploadFile {
 
 		driver.get("https://encodable.com/uploaddemo/");
 
-		driver.findElement(By.xpath("//input[@type='file']")).sendKeys(uploadFilePath00);
+		driver.findElement(By.xpath("//input[@type='file']")).sendKeys(uploadFilePath);
 
 		WebElement uploadDropdown = driver.findElement(By.xpath("//select[@name='subdir1']"));
 		Select select = new Select(uploadDropdown);
