@@ -8,12 +8,15 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -22,12 +25,16 @@ import org.testng.annotations.AfterClass;
 public class Topic_10_UploadFile {
 	WebDriver driver;
 	String projectDirectory = System.getProperty("user.dir");
+	
+	// Iamge Name
 	String fileName = "Upload.png";
 	String fileName_02 = "02.png";
 	String fileName_03 = "03.png";
+	
+	// Image Path
 	String uploadFilePath = projectDirectory + "\\imges\\" + fileName;
-	String uploadFilePath01 = projectDirectory + "\\imges\\" + fileName_02;
-	String uploadFilePath02 = projectDirectory + "\\imges\\" + fileName_03;
+	String uploadFilePath_01 = projectDirectory + "\\imges\\" + fileName_02;
+	String uploadFilePath_02 = projectDirectory + "\\imges\\" + fileName_03;
 	
 	String chromeUpload = projectDirectory + "\\upload\\chrome.exe";
 	String firefoxUpload = projectDirectory + "\\upload\\firefox.exe";
@@ -47,12 +54,13 @@ public class Topic_10_UploadFile {
 		System.setProperty("webdriver.ie.driver", ".\\driver\\IEDriverServer.exe");
 		driver = new InternetExplorerDriver();
 
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(50, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		
 	}
 
 	public void TC_01_SendkeysAPI() {
+
 		driver.get("http://blueimp.github.io/jQuery-File-Upload/");
 
 		WebElement uploadElement = driver.findElement(By.xpath("//input[@type='file']"));
@@ -65,6 +73,50 @@ public class Topic_10_UploadFile {
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']//a[@title='" + fileName + "']")).isDisplayed());
 		
 
+	}
+	
+	@Test
+    public void TC_01_Upload_Multiple_Files() throws Exception {
+		driver.get("http://blueimp.github.io/jQuery-File-Upload/");
+
+		String files[] = { uploadFilePath, uploadFilePath_01, uploadFilePath_02 };
+		
+		int fileLength = files.length;
+		// Duyet qua tung phan tu cua mang
+		// Mang (3 phan tu): 0 - 1 - 2
+		
+		// For
+		for (int i = 0; i < fileLength; i++) {
+			WebElement uploadElement = driver.findElement(By.xpath("//input[@type='file']"));
+			System.out.println("Item = " + files[i]);
+			uploadElement.sendKeys(files[i]);
+		}
+
+		// Check 3 images displayed
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName_02 + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name' and text()='" + fileName_03 + "']")).isDisplayed());
+		
+		// Click 3 Start button
+
+		List<WebElement> startButton = driver.findElements(By.xpath("//table//button[@class='btn btn-primary start']"));
+		
+		// For-each
+		for (WebElement start : startButton) {
+			start.click();
+			Thread.sleep(1000);
+		}
+
+		// Check 3 images uploaded success
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[@title='" + fileName + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[@title='" + fileName_02 + "']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']/a[@title='" + fileName_03 + "']")).isDisplayed());
+
+		// Check 3 images real
+		List<WebElement> images = driver.findElements(By.xpath("//table[@class='table table-striped']//img"));
+		for (WebElement image : images) {
+			Assert.assertTrue(checkAnyImageLoaded(image));
+		}
 	}
 	
 	public void TC_02_AutoIT() throws IOException, Exception {
@@ -127,7 +179,7 @@ public class Topic_10_UploadFile {
 		Assert.assertTrue(driver.findElement(By.xpath("//p[@class='name']//a[@title='" + fileName + "']")).isDisplayed());
 	}
 
-	@Test
+
 	public void TC_04_UploadFileChucker() {
 
 		driver.get("https://encodable.com/uploaddemo/");
@@ -153,6 +205,10 @@ public class Topic_10_UploadFile {
 		Assert.assertTrue(driver.findElement(By.xpath("//a[text()='"+ fileName + "']")).isDisplayed());
 		
 	}
+	
+	
+
+	
 
 	@AfterClass
 	public void afterClass() {
@@ -163,4 +219,11 @@ public class Topic_10_UploadFile {
 		Random random = new Random();
 		return random.nextInt(999999);
 	}
+	
+	public boolean checkAnyImageLoaded(WebElement image) {
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+	return (boolean) jsExecutor.executeScript("return arguments[0].complete &&" + "typeof arguments[0].naturalWidth != 'undefined' && arguments[0].naturalWidth > 0", image);	
+	}
 }
+
+
