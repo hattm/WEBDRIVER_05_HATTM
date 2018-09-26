@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Selenium Online 06" parallel="tests" thread-count = "2">
+
+<test name="Run on Chrome">
+	<parameter name = "browser" value ="chrome" />
+		<classes>
+			<class
+				name="selenium_online_05_testng.TestNG_04_Parameter_MultiBrowsers" />
+		</classes>
+	</test>
+	
+</suite>
