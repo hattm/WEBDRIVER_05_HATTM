@@ -35,7 +35,7 @@ public class Java_05_LoopStatement {
 			
 		}
 
-	/*	// For - Each (only for Array/ List)
+		// For - Each (only for Array/ List)
 		int loop = 0;
 		for (WebElement element : elements) {
 			loop++;
@@ -53,7 +53,7 @@ public class Java_05_LoopStatement {
 			System.out.println("Link in DO - WHILE [" + y + "] = " + elements.get(y).getAttribute("href"));
 			y++;
 
-		} while (y < number);*/
+		} while (y < number);
 
 		driver.quit();
 	}
