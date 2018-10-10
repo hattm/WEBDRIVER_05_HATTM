@@ -74,8 +74,8 @@ public class Topic_04_Textbox_TextArea_DropdowList {
 	public void TC_02_Textbox_TextArea() {
 		driver.get("http://demo.guru99.com/v4");
 
-		driver.findElement(By.xpath("//input[@name='uid']")).sendKeys("mngr145853");
-		driver.findElement(By.xpath("//input[@name='password']")).sendKeys("henEbar");
+		driver.findElement(By.xpath("//input[@name='uid']")).sendKeys("mngr156828");
+		driver.findElement(By.xpath("//input[@name='password']")).sendKeys("bYjEguh");
 		driver.findElement(By.xpath("//input[@name='btnLogin']")).click();
 
 		Assert.assertTrue(driver.findElement(By.xpath("//marquee[text()=\"Welcome To Manager's Page of Guru99 Bank\"]"))
