@@ -7,15 +7,17 @@ public class Java_Exercise {
 
 		char kyTu = 'a';
 		int count = 0;
+		testing = testing.replace("A", "a");
 		// duyệt từ đầu đến cuối chuỗi
 		for (int i = 0; i < testing.length(); i++) {
 			// Nếu ký tự tại vị trí thứ i bằng 'a' thì tăng count lên 1
 			if (testing.charAt(i) == kyTu) {
 				count++;
+				
 			}
 		}
 
-		System.out.println("Số lần xuất hiện của ký tự " + kyTu + " trong chuỗi " + testing + " = " + count);
+		System.out.println ("ký tự a  = " + count);
 
 		boolean compareValue = testing.contains("Testing");
 		System.out.println("So sanh chuoi tương đối = " + compareValue);
