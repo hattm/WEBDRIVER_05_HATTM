@@ -18,16 +18,8 @@ public class Tip_01_StringFormatResParameter {
 
 	private static void clickToElement(String locator) {
 		System.out.println(locator);
-		
 	}
-	private static void clickToElement(String locator, String value) {
-		locator = String.format(locator, value);
-		System.out.println(locator);
-	}
-	private static void clickToElement(String locator, String value01, String value02) {
-		locator = String.format(locator, value01, value02);
-		System.out.println(locator);
-	}
+	// Rest Parameter (Trick Java Language)
 	private static void clickToElement(String locator, String...value) {
 		locator = String.format(locator, (Object[]) value);
 		System.out.println(locator);
